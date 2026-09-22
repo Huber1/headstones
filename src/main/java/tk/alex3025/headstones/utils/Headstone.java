@@ -1,5 +1,6 @@
 package tk.alex3025.headstones.utils;
 
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -175,8 +176,8 @@ public class Headstone {
         for (int x = playerX - radius; x <= playerX + radius; x++) {
             for (int y = playerY - radius; y <= playerY + radius; y++)
                 for (int z = playerZ - radius; z <= playerZ + radius; z++) {
-                    Block block = this.location.getWorld().getBlockAt(x,y,z);
-                    if (block.getType().isEmpty())
+                    Block block = this.location.getWorld().getBlockAt(x, y, z);
+                    if (block.getType().isAir())
                         return block;
                 }
 
@@ -194,7 +195,7 @@ public class Headstone {
             block.setType(Material.PLAYER_HEAD);
 
             if (block.getState() instanceof Skull skull) {
-                skull.setOwningPlayer(this.owner);
+                skull.setProfile(ResolvableProfile.resolvableProfile(owner.getPlayerProfile()));
 
                 BlockData data = skull.getBlockData();
 
